@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:46:03 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/24 16:38:10 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:49:31 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@ typedef struct s_printf_arg
 	int				signflag;
 	int				spaceflag;
 	int				altflag;
+	int				cutflag;
 	unsigned int	pad;
 	int				(*convf)(struct s_printf_arg *);
 	t_printf_data	d;
 }	t_printf_arg;
 
 t_printf_arg	ft_printf_parse_arg(const char **str);
+void			ft_print_pad(unsigned int n, char c);
+char			*ft_printf_uitoabase(unsigned long int n, const char *base,
+					t_printf_arg *arg);
+char			*ft_printf_itoabase(int n, const char *base,
+					t_printf_arg *arg);
 
 #endif

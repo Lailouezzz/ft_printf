@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/04/24 17:44:00 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/04/26 14:15:23 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,17 +28,17 @@ CC := gcc
 CWARN := all extra error
 CWARN := $(CWARN:%=-W%)
 
-CFLAGS := -c $(CWARN) -Ilibft
+CFLAGS := -g -c $(CWARN) -Ilibft
 
 # ---
 # Lib information
 # ---
 
 NAME := libftprintf.a
-LIBFT := libft/libft.a
+LIBFT := libft.a
 
-SRCS := ft_printf.c ft_printf_arg.c ft_printf_conv.c
-OBJS := $(SRCS:%.c=%.o) $(LIBFT)
+SRCS := ft_printf.c ft_printf_arg.c ft_printf_conv.c ft_print_pad.c ft_printf_itoa.c
+OBJS := $(SRCS:%.c=%.o)
 SRCS_BONUS := 
 OBJS_BONUS := $(SRCS_BONUS:%.c=%.o)
 
@@ -76,10 +76,12 @@ bonus: $(OBJS) $(OBJS_BONUS)
 # ---
 
 $(LIBFT):
-	(cd libft && make all)
+	$(MAKE) -C libft
+	mv libft/libft.a .
 
-$(NAME): $(OBJS)
-	ar rcs $@ $^
+$(NAME): $(OBJS) $(LIBFT)
+	mv $(LIBFT) $@
+	ar rcs $@ $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I. -o $@ $<

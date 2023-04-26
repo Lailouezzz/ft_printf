@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:16:13 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/24 17:51:07 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:49:21 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ static void	ft_printf_parse_arg_flag(const char **str, t_printf_arg *arg)
 		arg->spaceflag = 1;
 	else if (*s == '#')
 		arg->altflag = 1;
-	if (*s == '0' || *s == '-' || *s == '+' || *s == ' ' || *s == '#')
+	else if (*s == '.')
+		arg->cutflag = 1;
+	if (*s == '0' || *s == '-' || *s == '+' || *s == ' ' || *s == '#'
+		|| *s == '.')
 	{	
 		++s;
 		ft_printf_parse_arg_flag(&s, arg);

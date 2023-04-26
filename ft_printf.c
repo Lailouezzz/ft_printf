@@ -6,12 +6,13 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 13:28:17 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/24 17:46:58 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:11:29 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
+#include "ft_printf_conv.h"
 #include "ft_printf_utils.h"
 
 int	ft_vprintf(const char *fmt, va_list param)
@@ -26,7 +27,8 @@ int	ft_vprintf(const char *fmt, va_list param)
 		{
 			++fmt;
 			arg = ft_printf_parse_arg(&fmt);
-			arg.d = va_arg(param, t_printf_data);
+			if (arg.convf != ft_print_prc && arg.convf != 0)
+				arg.d = va_arg(param, t_printf_data);
 			if (arg.convf == 0)
 				write(STDOUT_FILENO, "%", 1);
 			else
@@ -36,6 +38,7 @@ int	ft_vprintf(const char *fmt, va_list param)
 		{
 			write(STDOUT_FILENO, fmt, 1);
 			++fmt;
+			++written;
 		}
 	}
 	return (written);
