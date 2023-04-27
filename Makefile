@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/04/27 21:33:41 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/04/27 21:35:43 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,8 +64,12 @@ fclean: clean
 # Rebuild
 
 re: fclean all
+
+# Bonus
+
+bonus: all
 	
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 
 # ---
 # Build targets
