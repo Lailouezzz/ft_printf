@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/04/27 19:03:17 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/04/27 21:24:17 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ CC := gcc
 CWARN := all extra error
 CWARN := $(CWARN:%=-W%)
 
-CFLAGS := -g -c $(CWARN) -Ilibft
+CFLAGS := -c $(CWARN) -Ilibft
 
 # ---
 # Lib information
@@ -78,7 +78,7 @@ bonus: $(OBJS) $(OBJS_BONUS)
 
 $(LIBFT):
 	$(MAKE) -C libft
-	mv libft/libft.a .
+	mv libft/libft.a $(LIBFT)
 
 $(NAME): $(OBJS) $(LIBFT)
 	mv $(LIBFT) $@
