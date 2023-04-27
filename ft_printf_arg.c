@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:16:13 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/26 16:49:21 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:19:36 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,26 @@ static void	ft_printf_parse_arg_flag(const char **str, t_printf_arg *arg)
 		arg->spaceflag = 1;
 	else if (*s == '#')
 		arg->altflag = 1;
-	else if (*s == '.')
-		arg->cutflag = 1;
-	if (*s == '0' || *s == '-' || *s == '+' || *s == ' ' || *s == '#'
-		|| *s == '.')
+	if (*s == '0' || *s == '-' || *s == '+' || *s == ' ' || *s == '#')
 	{	
 		++s;
 		ft_printf_parse_arg_flag(&s, arg);
+	}
+	*str = s;
+}
+
+static void	ft_printf_parse_arg_prec(const char **str, t_printf_arg *arg)
+{
+	const char	*s;
+
+	s = *str;
+	if (*s == '.')
+	{
+		arg->zflag = 0;
+		++s;
+		arg->precflag = ft_uatoi(s);
+		while (ft_isdigit(*s))
+			++s;
 	}
 	*str = s;
 }
@@ -89,6 +102,7 @@ t_printf_arg	ft_printf_parse_arg(const char **str)
 
 	s = *str;
 	ft_memset(&arg, 0, sizeof(arg));
+	arg.precflag = -1;
 	ft_printf_parse_arg_flag(&s, &arg);
 	if (*s == '\0')
 		return (arg);
@@ -97,6 +111,7 @@ t_printf_arg	ft_printf_parse_arg(const char **str)
 		++s;
 	if (*s == '\0')
 		return (arg);
+	ft_printf_parse_arg_prec(&s, &arg);
 	ft_printf_parse_arg_conv(&s, &arg);
 	*str = s;
 	return (arg);

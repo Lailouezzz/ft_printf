@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:26:00 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/26 16:42:21 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:15:07 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,19 @@ static size_t	ft_printf_uitoabase_len(unsigned long int n, const char *base,
 
 	k = 0;
 	if (n == 0)
-		return (1);
-	if (arg->altflag)
+		k = 1;
+	if (n == 0 && arg->precflag == 0)
+		return (0);
+	if (arg->altflag && n != 0)
 		k += 2;
 	while (n != 0)
 	{
 		n /= ft_strlen(base);
 		++k;
 	}
-	if (arg->pad > k && arg->zflag)
+	if (arg->precflag > 0)
+		k = MAX(k, (size_t) arg->precflag);
+	else if (arg->pad > k && arg->zflag)
 		k = arg->pad;
 	return (k);
 }
@@ -39,10 +43,7 @@ static void	ft_printf_itoabase_aux(int n, char *s, const char *base,
 {
 	unsigned int	nabs;
 
-	if (n < 0)
-		nabs = -n;
-	else
-		nabs = n;
+	nabs = ABS(n);
 	while (nabs != 0)
 	{
 		--*nlen;
@@ -61,12 +62,9 @@ char	*ft_printf_uitoabase(unsigned long int n, const char *base,
 	s = malloc(nlen + 1);
 	if (s == NULL)
 		return (NULL);
-	s[nlen] = '\0';
 	if (n == 0)
-	{
-		s[nlen - 1] = *base;
-		return (s);
-	}
+		arg->altflag = 0;
+	s[nlen] = '\0';
 	while (n != 0)
 	{
 		s[--nlen] = base[n % ft_strlen(base)];
@@ -87,13 +85,10 @@ static size_t	ft_printf_itoabase_len(int n, const char *base,
 	size_t			k;
 	unsigned int	nabs;
 
-	if (n < 0)
-		nabs = -n;
-	else
-		nabs = n;
+	if (arg->precflag == 0 && n == 0)
+		return (0);
+	nabs = ABS(n);
 	k = 0;
-	if (n < 0 || arg->signflag || arg->spaceflag)
-		++k;
 	if (n == 0)
 		++k;
 	while (nabs != 0)
@@ -101,7 +96,11 @@ static size_t	ft_printf_itoabase_len(int n, const char *base,
 		nabs /= ft_strlen(base);
 		++k;
 	}
-	if (arg->pad > k && arg->zflag)
+	if (arg->precflag > 0)
+		k = MAX(k, (size_t) arg->precflag);
+	if (n < 0 || arg->signflag || arg->spaceflag)
+		++k;
+	if (arg->pad > k && arg->zflag && arg->precflag <= 0)
 		k = arg->pad;
 	return (k);
 }
@@ -117,9 +116,11 @@ char	*ft_printf_itoabase(int n, const char *base,
 	if (s == NULL)
 		return (NULL);
 	s[nlen] = '\0';
+	if (nlen == 0)
+		return (s);
 	if (n == 0)
 		s[nlen - 1] = *base;
-	if (arg->zflag)
+	if (arg->zflag || arg->precflag > 0)
 		*s = *base;
 	if (arg->signflag && n >= 0)
 		*s = '+';
@@ -129,9 +130,6 @@ char	*ft_printf_itoabase(int n, const char *base,
 		*s = ' ';
 	ft_printf_itoabase_aux(n, s, base, &nlen);
 	while (nlen > 1)
-	{
-		--nlen;
-		s[nlen] = *base;
-	}
+		s[--nlen] = *base;
 	return (s);
 }

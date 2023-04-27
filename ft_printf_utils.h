@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:46:03 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/26 16:49:31 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 19:45:37 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define FT_PRINTF_UTILS_H
 
 # include <stdint.h>
+
+# define MAX(a, b) ((a) > (b) ? (a) : (b))
+# define MIN(a, b) ((a) < (b) ? (a) : (b))
+# define ABS(n) ((n) > 0 ? (n) : -(n))
 
 typedef union u_printf_data
 {
@@ -31,7 +35,7 @@ typedef struct s_printf_arg
 	int				signflag;
 	int				spaceflag;
 	int				altflag;
-	int				cutflag;
+	int				precflag;
 	unsigned int	pad;
 	int				(*convf)(struct s_printf_arg *);
 	t_printf_data	d;

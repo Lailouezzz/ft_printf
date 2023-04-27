@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:43:43 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/26 17:00:49 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:09:46 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,29 @@ int	ft_print_chr(t_printf_arg *arg)
 
 int	ft_print_str(t_printf_arg *arg)
 {
+	size_t		slen;
+	int			written;
 	int			diff;
 	const char	*s;
 
-	if (arg->d.str == NULL)
+	if (arg->d.str == NULL && (arg->precflag >= 6 || arg->precflag == -1))
 		arg->d.str = "(null)";
-	diff = (int) arg->pad - ft_strlen(arg->d.str);
-	if (diff > 0 && !arg->leftflag && !arg->cutflag)
+	else if (arg->d.str == NULL && arg->precflag < 6)
+		arg->d.str = "";
+	if (arg->precflag != -1)
+		slen = MIN(ft_strlen(arg->d.str), (size_t) arg->precflag);
+	else
+		slen = ft_strlen(arg->d.str);
+	written = MAX(slen, arg->pad);
+	diff = arg->pad - slen;
+	if (arg->pad != 0 && !arg->leftflag && diff > 0)
 		ft_print_pad(diff, ' ');
 	s = arg->d.str;
-	while (*s != '\0')
-	{
-		if (arg->cutflag)
-			if (arg->pad-- == 0)
-				break ;
+	while (*s != '\0' && slen-- != 0)
 		ft_putchar_fd(*(s++), STDOUT_FILENO);
-	}
-	if (diff > 0 && arg->leftflag && !arg->cutflag)
+	if (arg->pad != 0 && arg->leftflag && diff > 0)
 		ft_print_pad(diff, ' ');
-	if (diff > 0 && !arg->cutflag)
-		return (diff + ft_strlen(arg->d.str));
-	return (s - arg->d.str);
+	return (written);
 }
 
 int	ft_print_ptr(t_printf_arg *arg)
@@ -59,12 +61,13 @@ int	ft_print_ptr(t_printf_arg *arg)
 
 	if (arg->d.ptr == 0)
 	{
-		ft_putstr_fd("(nil)", STDOUT_FILENO);
-		return (5);
+		arg->d.str = "(nil)";
+		return (ft_print_str(arg));
 	}
 	arg->altflag = 1;
 	arg->convf = ft_print_hxm;
 	str = ft_printf_uitoabase(arg->d.ptr, "0123456789abcdef", arg);
+	arg->precflag = -1;
 	arg->d.str = str;
 	written = ft_print_str(arg);
 	free(str);
@@ -77,7 +80,7 @@ int	ft_print_dec(t_printf_arg *arg)
 	char	*str;
 
 	str = ft_printf_itoabase(arg->d.nb, "0123456789", arg);
-	arg->cutflag = 0;
+	arg->precflag = -1;
 	arg->d.str = str;
 	written = ft_print_str(arg);
 	free(str);
@@ -90,6 +93,7 @@ int	ft_print_uns(t_printf_arg *arg)
 	char	*str;
 
 	str = ft_printf_uitoabase(arg->d.unb, "0123456789", arg);
+	arg->precflag = -1;
 	arg->d.str = str;
 	written = ft_print_str(arg);
 	free(str);
@@ -102,6 +106,7 @@ int	ft_print_hxm(t_printf_arg *arg)
 	char	*str;
 
 	str = ft_printf_uitoabase(arg->d.unb, "0123456789abcdef", arg);
+	arg->precflag = -1;
 	arg->d.str = str;
 	written = ft_print_str(arg);
 	free(str);
@@ -114,6 +119,7 @@ int	ft_print_hxc(t_printf_arg *arg)
 	char	*str;
 
 	str = ft_printf_uitoabase(arg->d.unb, "0123456789ABCDEF", arg);
+	arg->precflag = -1;
 	arg->d.str = str;
 	written = ft_print_str(arg);
 	free(str);

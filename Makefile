@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/04/26 14:15:23 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/04/27 19:03:17 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ all: $(NAME)
 
 clean:
 	$(RM) $(OBJS) $(OBJS_BONUS)
+	$(MAKE) clean -C libft
 
 # Clean everything
 
