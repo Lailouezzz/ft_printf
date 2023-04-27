@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:43:43 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/27 20:32:59 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:28:47 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	ft_print_str(t_printf_arg *arg)
 	else if (arg->d.str == NULL && arg->precflag < 6)
 		arg->d.str = "";
 	if (arg->precflag != -1)
-		slen = MIN(ft_strlen(arg->d.str), (size_t) arg->precflag);
+		slen = min(ft_strlen(arg->d.str), (size_t) arg->precflag);
 	else
 		slen = ft_strlen(arg->d.str);
-	written = MAX(slen, arg->pad);
+	written = max(slen, arg->pad);
 	diff = arg->pad - slen;
 	if (arg->pad != 0 && !arg->leftflag && diff > 0)
 		ft_print_pad(diff, ' ');

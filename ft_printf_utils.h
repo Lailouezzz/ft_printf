@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:46:03 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/27 21:23:05 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:29:43 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 # define FT_PRINTF_UTILS_H
 
 # include <stdint.h>
-
-# define MAX(a, b) ((a) > (b) ? (a) : (b))
-# define MIN(a, b) ((a) < (b) ? (a) : (b))
-# define ABS(n) ((n) > 0 ? (n) : -(n))
 
 typedef union u_printf_data
 {
@@ -47,5 +43,8 @@ char			*ft_printf_uitoabase(unsigned long int n, const char *base,
 					t_printf_arg *arg);
 char			*ft_printf_itoabase(int n, const char *base,
 					t_printf_arg *arg);
+int				min(int a, int b);
+int				max(int a, int b);
+int				abs(int a);
 
 #endif

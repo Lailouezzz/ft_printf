@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/04/27 20:32:55 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/04/27 21:30:37 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CFLAGS := -c $(CWARN) -Ilibft
 NAME := libftprintf.a
 LIBFT := libft.a
 
-SRCS := ft_printf.c ft_printf_arg.c ft_printf_conv.c ft_printf_conv2.c ft_print_pad.c ft_printf_itoa.c
+SRCS := ft_printf.c ft_printf_arg.c ft_printf_conv.c ft_printf_conv2.c ft_print_pad.c ft_printf_itoa.c ft_printf_minmaxabs.c
 OBJS := $(SRCS:%.c=%.o)
 SRCS_BONUS := 
 OBJS_BONUS := $(SRCS_BONUS:%.c=%.o)

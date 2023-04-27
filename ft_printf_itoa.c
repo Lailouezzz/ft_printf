@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:26:00 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/04/27 21:15:07 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:30:00 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static size_t	ft_printf_uitoabase_len(unsigned long int n, const char *base,
 		++k;
 	}
 	if (arg->precflag > 0)
-		k = MAX(k, (size_t) arg->precflag);
+		k = max(k, (size_t) arg->precflag);
 	else if (arg->pad > k && arg->zflag)
 		k = arg->pad;
 	return (k);
@@ -43,7 +43,7 @@ static void	ft_printf_itoabase_aux(int n, char *s, const char *base,
 {
 	unsigned int	nabs;
 
-	nabs = ABS(n);
+	nabs = abs(n);
 	while (nabs != 0)
 	{
 		--*nlen;
@@ -87,7 +87,7 @@ static size_t	ft_printf_itoabase_len(int n, const char *base,
 
 	if (arg->precflag == 0 && n == 0)
 		return (0);
-	nabs = ABS(n);
+	nabs = abs(n);
 	k = 0;
 	if (n == 0)
 		++k;
@@ -97,7 +97,7 @@ static size_t	ft_printf_itoabase_len(int n, const char *base,
 		++k;
 	}
 	if (arg->precflag > 0)
-		k = MAX(k, (size_t) arg->precflag);
+		k = max(k, (size_t) arg->precflag);
 	if (n < 0 || arg->signflag || arg->spaceflag)
 		++k;
 	if (arg->pad > k && arg->zflag && arg->precflag <= 0)
